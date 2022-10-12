@@ -51,6 +51,7 @@ dependencies {
     implementation "com.github.cliftonlabs:json-simple:2.1.2"
     implementation "org.json:json:20210307"
     implementation "io.grpc:grpc-netty-shaded:1.40.1"
+    implementation 'cloud.filibuster:instrumentation:0.29-SNAPSHOT'
 
     // Logging
     runtimeOnly 'ch.qos.logback:logback-classic:1.2.3'
@@ -62,6 +63,16 @@ dependencies {
 
 application {
     mainClass = 'cloud.filibuster.tutorial.Main'
+}
+
+repositories {
+    maven {
+        url = uri("https://maven.pkg.github.com/filibuster-testing/filibuster-java")
+        credentials {
+            username = project.findProperty("gpr.user") ?: System.getenv("GITHUB_USERNAME")
+            password = project.findProperty("gpr.key") ?: System.getenv("GITHUB_TOKEN")
+        }
+    }
 }
 
 test {

@@ -1,5 +1,6 @@
 package cloud.filibuster.tutorial.hello;
 
+import cloud.filibuster.instrumentation.libraries.armeria.http.FilibusterDecoratingHttpClient;
 import cloud.filibuster.tutorial.world.WorldServer;
 import com.linecorp.armeria.client.ClientFactory;
 import com.linecorp.armeria.client.WebClient;
@@ -32,7 +33,7 @@ public class HelloServer {
 
     final static String worldBaseURI = "http://127.0.0.1:" + WorldServer.PORT + "/";
 
-    final static WebClient webClient = WebClient.builder(worldBaseURI).factory(clientFactory).build();
+    final static WebClient webClient = WebClient.builder(worldBaseURI).factory(clientFactory).decorator(delegate -> new FilibusterDecoratingHttpClient(delegate, SERVICE_NAME)).build();
 
     private HelloServer() {
 
